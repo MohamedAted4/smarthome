@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'home.dart';
-import 'login.dart';
+import 'package:smarthome/home/home.dart';
+import 'signup.dart';
 
-class SignupPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -19,8 +21,8 @@ class _SignupPageState extends State<SignupPage> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
-            const Color.fromARGB(255, 162, 23, 186),
-            const Color.fromARGB(255, 214, 162, 7)
+            Color(0xffB81736),
+            Color(0xff281537)
           ], begin: Alignment.topLeft, end: Alignment.bottomRight),
         ),
         child: SingleChildScrollView(
@@ -43,9 +45,9 @@ class _SignupPageState extends State<SignupPage> {
                     _inputField("Password", passwordController,
                         isPassword: true, iconData: Icons.lock),
                     SizedBox(height: 20),
+                    _loginBtn(),
+                    SizedBox(height: 20),
                     _signUpBtn(),
-                    SizedBox(height: 50), // Added extra spacing at the bottom
-                    _backToMainBtn(), // Add the back to main page button
                     SizedBox(height: 50), // Added extra spacing at the bottom
                   ],
                 ),
@@ -93,7 +95,7 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-    Widget _signUpBtn() {
+  Widget _loginBtn() {
   return ElevatedButton(
     onPressed: () async {
       String email = emailController.text.trim();
@@ -105,8 +107,8 @@ class _SignupPageState extends State<SignupPage> {
       }
 
       try {
-        // Create user with email and password
-        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        // Sign in with email and password
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email,
           password: password,
         );
@@ -115,15 +117,14 @@ class _SignupPageState extends State<SignupPage> {
         User? user = userCredential.user;
         if (user != null) {
           String uid = user.uid; // Get the user ID
-          String userEmail = user.email ?? "No email"; // Get the user email
 
           // Navigate to Home page and pass the UID and email
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => Home(
-                userId: uid,   // Pass UID to Home page
-                email: userEmail, // Pass email to Home page
+                userId: uid,  // Pass UID to Home page
+                email: user.email ?? "No email",  // Pass email to Home page, handle null case
               ),
             ),
           );
@@ -135,7 +136,7 @@ class _SignupPageState extends State<SignupPage> {
     child: SizedBox(
       width: double.infinity,
       child: Text(
-        'SIGN UP',
+        'SIGN IN',
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 20),
       ),
@@ -149,49 +150,30 @@ class _SignupPageState extends State<SignupPage> {
   );
 }
 
-
-
-Widget _backToMainBtn() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TextButton(
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPage()), // Replace with your main page widget
-            );
-          },
-          child: Text(
-            'Back to Main Page',
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
+  Widget _signUpBtn() {
+    return ElevatedButton(
+      onPressed: () async {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => SignupPage()),
+        );
+      },
+      child: SizedBox(
+        width: double.infinity,
+        child: Text(
+          'SIGN UP',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20),
         ),
-        SizedBox(width: 4), // Spacing between text and button
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPage()), // Replace with your main page widget
-            );
-          },
-          child: Text('Go'),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.blue,
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          ),
-        ),
-      ],
+      ),
+      style: ElevatedButton.styleFrom(
+        shape: StadiumBorder(),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.blue,
+        padding: EdgeInsets.symmetric(vertical: 16),
+      ),
     );
   }
-
-
-
-
-
-
-
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -210,9 +192,4 @@ Widget _backToMainBtn() {
       ),
     );
   }
-
-
-  
 }
-
-

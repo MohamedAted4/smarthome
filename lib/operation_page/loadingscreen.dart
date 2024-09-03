@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 class LoadingScreen extends StatefulWidget {
   final Widget page; // Page to navigate to after loading
@@ -8,6 +7,7 @@ class LoadingScreen extends StatefulWidget {
   final String Room_name;
   
   LoadingScreen({
+    super.key, 
     required this.page,
     required this.icon,
     required this.Room_name,
@@ -32,10 +32,12 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
 
   Future<void> _simulateLoading() async {
     await Future.delayed(Duration(seconds: 2));
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => widget.page), // Use widget.page
-    );
+    if (mounted) { // Check if the widget is still mounted
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => widget.page), // Use widget.page
+      );
+    }
   }
 
   @override
@@ -50,8 +52,8 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
       appBar: AppBar(
         title: Text(
           widget.Room_name,
-          style:TextStyle(
-            fontWeight:FontWeight.bold,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

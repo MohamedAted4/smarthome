@@ -16,11 +16,11 @@ class Opertaion_box extends StatelessWidget {
   void Function(bool)? onChanged;
 
 
-Opertaion_box({
+Opertaion_box({super.key, 
     required this.device,
     required this.icon,
     required this.power,
-    required this.onChanged,
+    required this.onChanged, required Color textColor,
 
   });
 
