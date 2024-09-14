@@ -69,52 +69,64 @@ class _AccountScreenState extends State<AccountScreen> {
                       height: 70,
                     ),
                     const SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            
-                            Text(
-                              "Gmail: ",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                color: isDarkMode ? Colors.white : Colors.black,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            textBaseline: TextBaseline.alphabetic,
+                            children: [
+                              Baseline(
+                                baseline: 20, 
+                                baselineType: TextBaseline.alphabetic,
+                                child: Text(
+                                  "Gmail: ",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: isDarkMode ? Colors.white : Colors.black,
+                                  ),
+                                ),
                               ),
-                            ),
-                            Text(
-                              widget.email1,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                                color: isDarkMode ? Colors.white : Colors.black,
+                              Expanded(
+                                child: Text(
+                                  widget.email1,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: isDarkMode ? Colors.white : Colors.black,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Text(
-                              "Id: ",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: isDarkMode ? Colors.grey[200] : Colors.grey,
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.baseline,
+                            textBaseline: TextBaseline.alphabetic, // Align children at the start of the vertical axis
+                            children: [
+                              Text(
+                                "Id: ",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: isDarkMode ? Colors.grey[200] : Colors.grey,
+                                ),
                               ),
-                            ),
-                            Text(
-                              widget.userId1,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: isDarkMode ? Colors.grey[200] : Colors.grey,
+                              Expanded(
+                                child: Text(
+                                  widget.userId1,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: isDarkMode ? Colors.grey[200] : Colors.grey,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    const Spacer(),
                   ],
                 ),
               ),
@@ -276,7 +288,7 @@ void _showLogoutDialog_deleteaccount(BuildContext context) {
 
 
 void _launchAdminWebsite() async {
-    final Uri _url = Uri.parse('https://www.facebook.com/'); 
+    final Uri _url = Uri.parse('http://192.168.112.197:8080/demo/admin/web.php'); 
     if (await canLaunchUrl(_url)) {
       await launchUrl(_url, mode: LaunchMode.externalApplication);
     } else {

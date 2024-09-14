@@ -4,19 +4,22 @@ import 'login/splachScreen.dart';
 import 'package:provider/provider.dart';
 import 'setting/theme_provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:smarthome/operation_page/pg/mqtt_service.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   tz.initializeTimeZones();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => MqttService()), // Ensure this is present
+      ],
       child: First_page(),
     ),
   );
 }
-
 
 class First_page extends StatelessWidget {
   const First_page({super.key});

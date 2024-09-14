@@ -20,10 +20,6 @@ class Lang extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
-    // final bool isDarkMode = theme.brightness == Brightness.dark;
-
-
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         final isDarkMode = themeProvider.isDarkMode;

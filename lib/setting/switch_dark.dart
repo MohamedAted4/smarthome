@@ -5,8 +5,6 @@ import 'theme_provider.dart';
 
 class Switch_butt extends StatelessWidget {
   final String title;
-  // final Color color;
-  // final Color iconcolor;
   final IconData icon;
   final bool value;
   final VoidCallback ontap; // Change to VoidCallback
@@ -14,8 +12,6 @@ class Switch_butt extends StatelessWidget {
   const Switch_butt({
     super.key,
     required this.title,
-    // required this.color,
-    // required this.iconcolor,
     required this.icon,
     required this.value,
     required this.ontap, // Adjust this line

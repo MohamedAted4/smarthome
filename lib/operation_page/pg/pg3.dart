@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smarthome/operation_page/operation.dart';
+import 'package:smarthome/operation_page/pg/mqtt_service.dart';
 import 'package:smarthome/setting/theme_provider.dart';
-import 'operation.dart';
 
-class Pg extends StatefulWidget {
+class Pg3 extends StatefulWidget {
   final IconData icon_page;
   final String name_page;
   final void Function(bool) onLightSwitchChanged;
   final void Function(bool) onDoorSwitchChanged;
 
-  const Pg({
+  const Pg3({
     Key? key,
     required this.icon_page,
     required this.name_page,
@@ -18,29 +19,84 @@ class Pg extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<Pg> createState() => _PgState();
+  State<Pg3> createState() => _PgState();
 }
 
-class _PgState extends State<Pg> {
+class _PgState extends State<Pg3> {
   static const double horizontalPadding = 20.0;
   static const double verticalPadding = 15.0;
+  final MqttService mqttService = MqttService();
+
 
   List<dynamic> operation = [
-    ["Lights", Icons.light, false],
-    ["Door", Icons.door_sliding_sharp, false],
+    ["Lights", Icons.light, false,"home/led/status"],
+    ["Door", Icons.door_sliding_sharp, false,"home/door/status"],
   ];
 
-  void switchChanged(bool value, int index) {
+  bool isMqttConnected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeMqtt();
+  }
+
+  Future<void> _initializeMqtt() async {
+    try {
+      print("Attempting to connect to MQTT broker...");
+      bool connected = await mqttService.connect(
+        'hivemq.webclient.1723383548512', 
+        '7u!6>?4fG,X5BizvNYtL',
+      );
+      setState(() {
+        isMqttConnected = connected;
+      });
+      if (connected) {
+        print("MQTT connected successfully!");
+      } else {
+        print("MQTT connection failed.");
+      }
+    } catch (e) {
+      print("Error during MQTT connection: $e");
+      setState(() {
+        isMqttConnected = false;
+      });
+    }
+  }
+
+  void switchChanged(bool value, int index) async {
+    if (!isMqttConnected) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('MQTT not connected! Reconnecting...'),
+        ),
+      );
+
+      await _initializeMqtt();
+
+      if (!isMqttConnected) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Unable to connect to MQTT broker.'),
+          ),
+        );
+        return;
+      }
+    }
+
     setState(() {
       operation[index][2] = value;
     });
 
     if (index == 0) {
       widget.onLightSwitchChanged(value);
+      mqttService.publishMessage(operation[index][3], value ? 'ON' : 'OFF');
     } else if (index == 1) {
       widget.onDoorSwitchChanged(value);
+      mqttService.publishMessage(operation[index][3], value ? 'OPEN' : 'CLOSED');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

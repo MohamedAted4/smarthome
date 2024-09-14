@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "61227396773",
-    "project_id": "test-f95dd",
-    "storage_bucket": "test-f95dd.appspot.com"
+    "project_number": "503929804217",
+    "project_id": "smarthome-797c6",
+    "storage_bucket": "smarthome-797c6.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:61227396773:android:5a772ed971fe9a036b274c",
+        "mobilesdk_app_id": "1:503929804217:android:10522c9fa00e23dc54d268",
         "android_client_info": {
           "package_name": "com.example.smarthome"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDukBfj-XsfrDJvLLmLUBfal8G5IshdGd4"
+          "current_key": "AIzaSyBFVLtHYI7RAkbfta9Eh0YGyHZOJKy309Q"
         }
       ],
       "services": {

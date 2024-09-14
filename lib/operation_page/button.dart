@@ -38,7 +38,7 @@ class _BUTTState extends State<BUTT> {
           height: 150,
           decoration: BoxDecoration(
             color: _isColored
-                ? Colors.amber[600] // Change to desired color
+                ? Colors.amber[600] 
                 :  Colors.white,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(15),
@@ -47,7 +47,7 @@ class _BUTTState extends State<BUTT> {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 2,
                 blurRadius: 5,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: Offset(0, 3), 
               ),
             ],
           ),
@@ -57,7 +57,7 @@ class _BUTTState extends State<BUTT> {
             children: [
               IconButton(
                 padding: EdgeInsets.only(top: 15.0),
-                onPressed: _Navigatetonewpage, // navigation to new page 
+                onPressed: _Navigatetonewpage, 
                 iconSize: 90,
                 icon: Icon(
                   widget.icon,
@@ -65,17 +65,17 @@ class _BUTTState extends State<BUTT> {
                 ),
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all<Color>(
-                    Colors.white.withOpacity(0.2), // Subtle semi-transparent background
+                    Colors.white.withOpacity(0.2), 
                   ),
                   overlayColor: WidgetStateProperty.all<Color>(
-                    Colors.blueAccent.shade700.withOpacity(0.3), // More pronounced overlay color for interaction
+                    Colors.blueAccent.shade700.withOpacity(0.3), 
                   ),
                   shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10), // Rounded corners for the button
+                      borderRadius: BorderRadius.circular(10), 
                     ),
                   ),
-                  elevation: WidgetStateProperty.all<double>(0), // Remove button elevation if not needed
+                  elevation: WidgetStateProperty.all<double>(0), 
                 ),
               ),
               SizedBox(height: 4,),

@@ -1,11 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 
-// ignore: must_be_immutable
 class Opertaion_box extends StatelessWidget {
   
 
